@@ -99,10 +99,18 @@ fi
 if [ ! -f "mruby/build/wasm32-unknown-gnu/lib/libmruby.a" ]
 then
     cd mruby
+    # 完全クリーン
+    rm -rf build/
     cp ../../extra/build_config.rb ../../extra/vm.c.patch ./
-    patch -p0 --forward < vm.c.patch
+    patch -p0 --forward < vm.c.patch || true
+    
+    # mruby-onig-regexpが勝手にクローンされるのを防ぐ
     make clean
-    make
+    make || {
+        # エラーが出たらmruby-onig-regexpを削除して再試行
+        rm -rf build/repos/*/mruby-onig-regexp
+        make
+    }
     cd ..
 fi
 
