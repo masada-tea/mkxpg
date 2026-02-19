@@ -1,4 +1,3 @@
-cat > extra/build_config.rb << 'EOF'
 MRuby::Build.new do |conf|
     toolchain :gcc
     conf.gembox 'default'
@@ -18,4 +17,3 @@ MRuby::CrossBuild.new('wasm32-unknown-gnu') do |conf|
     conf.linker.command = 'emcc'
     conf.archiver.command = 'emar'
 end
-EOF
