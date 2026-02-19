@@ -1,14 +1,13 @@
+cat > extra/build_config.rb << 'EOF'
 MRuby::Build.new do |conf|
     toolchain :gcc
     conf.gembox 'default'
 end
-
 MRuby::CrossBuild.new('wasm32-unknown-gnu') do |conf|
     toolchain :clang
   
     conf.gembox 'default'
-    
-    conf.gem :github => 'pulsejet/mruby-marshal'
+    conf.gem :github => 'pulsejet/mruby-marshal', :commit => '0e8e2f9'
     conf.gem :github => 'monochromegane/mruby-time-strftime'
     conf.gem :core => 'mruby-eval'
     conf.cc.command = 'emcc'
@@ -19,3 +18,4 @@ MRuby::CrossBuild.new('wasm32-unknown-gnu') do |conf|
     conf.linker.command = 'emcc'
     conf.archiver.command = 'emar'
 end
+EOF
