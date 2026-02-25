@@ -3,7 +3,7 @@ MRuby::Build.new do |conf|
     conf.gembox 'default'
 end
 
-MRuby::CrossBuild.new('wasm32-unknown-gnu') do |conf|
+MRuby::CrossBuild.new('wasm32-unknown-emscripten') do |conf|
     toolchain :clang
   
     conf.gembox 'default'
@@ -11,7 +11,7 @@ MRuby::CrossBuild.new('wasm32-unknown-gnu') do |conf|
     conf.gem :github => 'monochromegane/mruby-time-strftime'
     conf.gem :core => 'mruby-eval'
     conf.cc.command = 'emcc'
-    conf.cc.flags = %W(-O0 -g0)
+    conf.cc.flags = %W(-O3 -g0)
     conf.cxx.command = 'em++'
     conf.cxx.flags = %W(-O3 -g0 -std=c++14)
   
